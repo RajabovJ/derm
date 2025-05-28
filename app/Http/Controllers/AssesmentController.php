@@ -8,7 +8,9 @@ use App\Http\Requests\UpdateAssesmentRequest;
 use App\Models\DiagnosisResult;
 use App\Models\Patient;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AssesmentController extends Controller
 {
@@ -20,26 +22,26 @@ class AssesmentController extends Controller
 
     public function create()
     {
-        //
+        $user = Auth::user();
+        $latestPatient = Patient::latest()->first();
+        $otherPatients = Patient::where('id', '!=', $latestPatient->id)
+                                ->orderBy('name')
+                                ->orderBy('surname')
+                                ->get();
+        $patients = collect([$latestPatient])->merge($otherPatients);
+        return view('doctor.assesments.create', [
+            'user' => $user,
+            'patients' => $patients,
+        ]);
     }
+
+
+
 
     public function store(StoreAssesmentRequest $request)
     {
         $data = $request->validated();
-
-        $patientData = Arr::only($data, [
-            'name',
-            'surname',
-            'birth',
-            'passport',
-            'phone',
-            'gender',
-        ]);
-
-        $patient = Patient::firstOrCreate(
-            ['passport' => $patientData['passport']],
-            $patientData
-        );
+        $patient = Patient::find($data['patient_id']);
         $assesment = Assesment::create([
             'patient_id' => $patient->id,
             'user_id' => auth()->id(),
@@ -56,7 +58,6 @@ class AssesmentController extends Controller
 
         if ($request->hasFile('lesion_photo')) {
             $image = $request->file('lesion_photo');
-
             $originalName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = $image->getClientOriginalExtension();
             $dateTime = date('Ymd_His');
@@ -68,11 +69,35 @@ class AssesmentController extends Controller
             ]);
         }
         $image = $request->file('lesion_photo');
-        $response = Http::attach(
-            'image',
-            file_get_contents($image->getPathname()),
-            $image->getClientOriginalName()
-        )->post('https://pythonapi-ufnp.onrender.com/api/predict/');
+        try {
+            $response = Http::timeout(100)
+            ->attach(
+                'image',
+                file_get_contents($image->getPathname()),
+                $image->getClientOriginalName()
+            )
+            ->post('https://scm.itorda.uz/api/predict/');
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+
+                $diagnosisResult = DiagnosisResult::create([
+                    'patient_id' => $patient->id,
+                    'assesment_id' => $assesment->id,
+                    'result' => $responseData['class'],
+                    'message' => $responseData['description'] ?? null,
+                ]);
+
+                return redirect()->route('diagnosis-results.show', ['diagnosis_result' => $diagnosisResult->id])
+                    ->with('success', 'Ma’lumotlar muvaffaqiyatli saqlandi!');
+            } else {
+                return redirect()->back()->with('error', 'Modeldan javob kelmadi. Keyinroq yana urinib ko‘ring.');
+            }
+        } catch (\Illuminate\Http\Client\RequestException $e) {
+            Log::error('Render.com API xatosi: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Model ishga tushmagan yoki hozircha mavjud emas. Iltimos, biroz kutib qayta urinib ko‘ring.');
+        }
 
         $responseData = $response->json();
         $diagnosisResult = DiagnosisResult::create([

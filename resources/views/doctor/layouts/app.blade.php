@@ -132,10 +132,16 @@
                with font-awesome or any other icon font library -->
 
 
-               <li class="nav-item">
+            <li class="nav-item">
                 <a href="{{route('dashboard')}}" class="nav-link">
                     <i class="nav-icon fas fa-home"></i>
                     <p>Bosh sahifa</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('patients.create') }}" class="nav-link">
+                    <i class="nav-icon fas fa-notes-medical"></i>
+                    <p>Tashxis qo‘yish</p>
                 </a>
             </li>
             <li class="nav-item">
@@ -167,6 +173,9 @@
                     <p>API (Melanoma tasvirlar)</p>
                 </a>
             </li>
+
+
+
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

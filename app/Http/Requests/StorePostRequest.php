@@ -21,7 +21,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maks 2MB rasm
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096', // Maks 2MB rasm
             'visibility' => 'required|in:public,doctor_only',
         ];
     }

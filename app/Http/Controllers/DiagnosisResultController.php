@@ -40,7 +40,6 @@ class DiagnosisResultController extends Controller
 
         }
 
-
     }
     public function index()
     {

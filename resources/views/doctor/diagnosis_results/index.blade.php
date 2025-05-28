@@ -15,7 +15,7 @@
 @endsection
 @section('content')
 <div class="col-md-12">
-    <div class="card">
+    <div class="card card-primary card-outline">
         <div class="card-header">
           <h3 class="card-title">Jami urinishlarim</h3>
           <div class="card-tools">
@@ -47,12 +47,49 @@
                     </thead>
                     <tbody>
                         @foreach ($diagnosisResults as $index => $diagnosisResult)
+                        @php
+                        switch ($diagnosisResult->result) {
+                            case 'mel':
+                                $badgeClass = 'badge-danger'; // eng xavfli
+                                $label = 'Melanoma';
+                                break;
+                            case 'akiec':
+                                $badgeClass = 'badge-warning';
+                                $label = 'Actinic Keratoses';
+                                break;
+                            case 'bcc':
+                                $badgeClass = 'badge-warning';
+                                $label = 'Basal Cell Carcinoma';
+                                break;
+                            case 'bkl':
+                                $badgeClass = 'badge-secondary';
+                                $label = 'Benign Keratosis';
+                                break;
+                            case 'df':
+                                $badgeClass = 'badge-info';
+                                $label = 'Dermatofibroma';
+                                break;
+                            case 'nv':
+                                $badgeClass = 'badge-primary';
+                                $label = 'Melanocytic Nevus';
+                                break;
+                            case 'vasc':
+                                $badgeClass = 'badge-success';
+                                $label = 'Vascular Lesions';
+                                break;
+                            default:
+                                $badgeClass = 'badge-dark';
+                                $label = ucfirst($diagnosisResult->result);
+                                break;
+                        }
+                    @endphp
+
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td class="d-none d-md-table-cell">
                                     {{ $diagnosisResult->patient->name . ' ' . $diagnosisResult->patient->surname }}
                                 </td>
-                                <td>{{ $diagnosisResult->result }}</td>
+                                <td><span class="badge {{ $badgeClass }}">{{ $label }}</span></td>
                                 <td class="d-none d-md-table-cell">
                                     {{ $diagnosisResult->message }}
                                 </td>

@@ -22,6 +22,7 @@ class StoreAssesmentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'patient_id' => 'required|exists:patients,id',
             'skin_type' => 'required|string',
             'family_history' => 'required|in:0,1',
             'sun_exposure_history' => 'required|string',
@@ -30,12 +31,6 @@ class StoreAssesmentRequest extends FormRequest
             'lesion_location' => 'required|string',
             'lesion_diameter' => 'required|numeric|min:0',
             'lesion_shape' => 'required|string',
-            'name' => 'required|string|max:100',
-            'surname' => 'required|string|max:100',
-            'birth' => 'required|date',
-            'passport' => 'required|string|max:20',
-            'phone' => 'required|string|max:20',
-            'gender' => 'required|in:Erkak,Ayol',
             'lesion_photo' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             'skin_changes_description'=>'string|max:500',
         ];

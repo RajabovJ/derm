@@ -57,9 +57,28 @@ class PatientController extends Controller
     }
     public function create()
     {
+        $user = Auth::user();
+        return view('doctor.patients.create', [
+            'user'=>$user,
+
+    ]);
     }
     public function store(StorePatientRequest $request)
     {
+        $data = $request->validated();
+        $patient = Patient::firstOrCreate(
+            [
+                'passport' => $data['passport'],
+                'phone' => $data['phone'],
+            ],
+            [
+                'name' => $data['name'],
+                'surname' => $data['surname'],
+                'birth' => $data['birth'],
+                'gender' => $data['gender'],
+            ]
+    );
+    return redirect()->route('assesments.create')->with('success', 'Bemor muvaffaqiyatli saqlandi!');
     }
     public function show(Patient $patient)
     {

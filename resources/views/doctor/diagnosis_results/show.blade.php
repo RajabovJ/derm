@@ -115,19 +115,58 @@
                         </div>
 
                         <!-- Tashxis natijasi -->
-                        <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
-                            <h4 class="mb-4 text-success border-bottom pb-2"><i class="fas fa-notes-medical mr-2"></i>Tashxis natijasi</h4>
-                            <dl class="row">
-                                <dt class="col-sm-4">Natija:</dt>
-                                <dd class="col-sm-8">{{ $diagnosisResult->result }}</dd>
+                        @php
+                        switch ($diagnosisResult->result) {
+                            case 'mel':
+                                $badgeClass = 'badge-danger'; // eng xavfli
+                                $label = 'Melanoma';
+                                break;
+                            case 'akiec':
+                                $badgeClass = 'badge-warning';
+                                $label = 'Actinic Keratoses';
+                                break;
+                            case 'bcc':
+                                $badgeClass = 'badge-warning';
+                                $label = 'Basal Cell Carcinoma';
+                                break;
+                            case 'bkl':
+                                $badgeClass = 'badge-secondary';
+                                $label = 'Benign Keratosis';
+                                break;
+                            case 'df':
+                                $badgeClass = 'badge-info';
+                                $label = 'Dermatofibroma';
+                                break;
+                            case 'nv':
+                                $badgeClass = 'badge-primary';
+                                $label = 'Melanocytic Nevus';
+                                break;
+                            case 'vasc':
+                                $badgeClass = 'badge-success';
+                                $label = 'Vascular Lesions';
+                                break;
+                            default:
+                                $badgeClass = 'badge-dark';
+                                $label = ucfirst($diagnosisResult->result);
+                                break;
+                        }
+                    @endphp
+                            <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
+                                <h4 class="mb-4 text-success border-bottom pb-2"><i class="fas fa-notes-medical mr-2"></i>Tashxis natijasi</h4>
+                                <dl class="row">
+                                    <dt class="col-sm-4">Natija:</dt>
+                                    <dd class="col-sm-8">
+                                        <span class="badge {{ $badgeClass }} p-2">{{ $label }}</span>
+                                    </dd>
 
-                                <dt class="col-sm-4">Tavsif:</dt>
-                                <dd class="col-sm-8">{{ $diagnosisResult->message }}</dd>
+                                    <dt class="col-sm-4">Tavsif:</dt>
+                                    <dd class="col-sm-8">{{ $diagnosisResult->message }}</dd>
 
-                                <dt class="col-sm-4">Doktor:</dt>
-                                <dd class="col-sm-8">{{ $user->name }}</dd>
-                            </dl>
-                        </div>
+                                    <dt class="col-sm-4">Doktor:</dt>
+                                    <dd class="col-sm-8">{{ $user->name }}</dd>
+                                </dl>
+                            </div>
+
 
                         <!-- Tashxis qo‘yish (forma joyi) -->
                         <div class="tab-pane fade" id="vert-tabs-diagnosis" role="tabpanel" aria-labelledby="vert-tabs-diagnosis-tab">

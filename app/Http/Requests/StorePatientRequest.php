@@ -11,7 +11,7 @@ class StorePatientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StorePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:100',
+            'surname' => 'required|string|max:100',
+            'birth' => 'required|date',
+            'passport' => 'required|string|max:20',
+            'phone' => 'required|string|max:20',
+            'gender' => 'required|in:Erkak,Ayol',
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Ism kiritilishi shart.',
+            'surname.required' => 'Familiya kiritilishi shart.',
+            'birth.required' => 'Tug‘ilgan sana kiritilishi shart.',
         ];
     }
 }
