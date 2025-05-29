@@ -36,12 +36,13 @@
                         <a class="nav-link d-flex align-items-center mb-2" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">
                             <i class="fas fa-notes-medical mr-2 text-success"></i> Tashxis natijasi
                         </a>
-                        <a class="nav-link d-flex align-items-center mb-2" id="vert-tabs-diagnosis-tab" data-toggle="pill" href="#vert-tabs-diagnosis" role="tab" aria-controls="vert-tabs-diagnosis" aria-selected="false">
-                            <i class="fas fa-pen-alt mr-2 text-warning"></i> Tashxis qo‘yish
-                        </a>
                         <a class="nav-link d-flex align-items-center mb-2" id="vert-tabs-ai-analysis-tab" data-toggle="pill" href="#vert-tabs-ai-analysis" role="tab" aria-controls="vert-tabs-ai-analysis" aria-selected="false">
                             <i class="fas fa-robot mr-2 text-info"></i> AI Tahlil Natijalari
                         </a>
+                        <a class="nav-link d-flex align-items-center mb-2" id="vert-tabs-diagnosis-tab" data-toggle="pill" href="#vert-tabs-diagnosis" role="tab" aria-controls="vert-tabs-diagnosis" aria-selected="false">
+                            <i class="fas fa-pen-alt mr-2 text-warning"></i> Tashxis qo‘yish
+                        </a>
+
 
 
                     </div>
@@ -167,19 +168,27 @@
                                 </dl>
                             </div>
 
+                            <div class="tab-pane fade" id="vert-tabs-ai-analysis" role="tabpanel" aria-labelledby="vert-tabs-ai-analysis-tab">
+                                <h4 class="mb-4 text-info border-bottom pb-2">
+                                    <i class="fas fa-robot mr-2"></i>AI Tahlil Natijalari
+                                </h4>
 
+                                <h3 class="card-title">Model Accuracy Grafigi</h3>
+                                <div style="width: 100%; max-width: 600px; height: 400px; margin-bottom: 40px;">
+                                    <canvas id="accuracyChart"></canvas>
+                                </div>
+
+                                <h3 class="card-title">Model Loss Grafigi</h3>
+                                <div style="width: 100%; max-width: 600px; height: 400px;">
+                                    <canvas id="lossChart"></canvas>
+                                </div>
+                            </div>
                         <!-- Tashxis qo‘yish (forma joyi) -->
-                        <div class="tab-pane fade" id="vert-tabs-diagnosis" role="tabpanel" aria-labelledby="vert-tabs-diagnosis-tab">
+                            <div class="tab-pane fade" id="vert-tabs-diagnosis" role="tabpanel" aria-labelledby="vert-tabs-diagnosis-tab">
                             <h4 class="mb-4 text-warning border-bottom pb-2"><i class="fas fa-pen-alt mr-2"></i>Tashxis qo‘yish</h4>
                             <h5>Bu yerga forma joylashtiriladi</h5>
-                        </div>
+                            </div>
 
-                        <div class="tab-pane fade" id="vert-tabs-ai-analysis" role="tabpanel" aria-labelledby="vert-tabs-ai-analysis-tab">
-                            <h4 class="mb-4 text-info border-bottom pb-2">
-                                <i class="fas fa-robot mr-2"></i>AI Tahlil Natijalari
-                            </h4>
-                            <p>Bu yerga AI tomonidan berilgan tahlil natijalari, grafiklar va boshqa ma'lumotlar joylashtiriladi.</p>
-                        </div>
 
                     </div>
                 </div>
@@ -196,4 +205,100 @@
 
 </div>
 
+@endsection
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const data = @json($chartData);
+
+    // Accuracy grafik uchun
+    const ctxAccuracy = document.getElementById('accuracyChart').getContext('2d');
+    new Chart(ctxAccuracy, {
+        type: 'line',
+        data: {
+            labels: data.epochs,
+            datasets: [
+                {
+                    label: 'Train Accuracy',
+                    data: data.train_accuracy,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: 'Validation Accuracy',
+                    data: data.val_accuracy,
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Train vs Validation Accuracy'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1
+                }
+            }
+        }
+    });
+
+    // Loss grafik uchun
+    const ctxLoss = document.getElementById('lossChart').getContext('2d');
+    new Chart(ctxLoss, {
+        type: 'line',
+        data: {
+            labels: data.epochs,
+            datasets: [
+                {
+                    label: 'Train Loss',
+                    data: data.train_loss,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: 'Validation Loss',
+                    data: data.val_loss,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Train vs Validation Loss'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                    // max limitni kerak bo'lsa qo'shishingiz mumkin
+                }
+            }
+        }
+    });
+});
+</script>
 @endsection

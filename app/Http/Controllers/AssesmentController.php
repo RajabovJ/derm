@@ -29,10 +29,23 @@ class AssesmentController extends Controller
                                 ->orderBy('surname')
                                 ->get();
         $patients = collect([$latestPatient])->merge($otherPatients);
-        return view('doctor.assesments.create', [
-            'user' => $user,
-            'patients' => $patients,
-        ]);
+        switch ($user->role->name)
+        {
+            case 'doctor':
+                return view('doctor.assesments.create', [
+                    'user' => $user,
+                    'patients' => $patients,
+                ]);
+            case 'admin':
+                return view('admin.assesments.create', [
+                    'user' => $user,
+                    'patients' => $patients,
+                ]);
+
+            default:
+                abort(403, 'Sizga bu sahifani ko‘rishga ruxsat berilmagan.');
+        }
+
     }
 
 

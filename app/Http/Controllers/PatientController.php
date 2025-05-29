@@ -58,10 +58,18 @@ class PatientController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('doctor.patients.create', [
-            'user'=>$user,
+        switch ($user->role->name)
+        {
+            case 'doctor':
+                return view('doctor.patients.create', [
+                    'user'=>$user]);
+            case 'admin':
+                return view('admin.patients.create', [
+                    'user'=>$user]);
 
-    ]);
+            default:
+                abort(403, 'Sizga bu sahifani ko‘rishga ruxsat berilmagan.');
+        }
     }
     public function store(StorePatientRequest $request)
     {

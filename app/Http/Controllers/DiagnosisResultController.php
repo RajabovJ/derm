@@ -78,6 +78,17 @@ class DiagnosisResultController extends Controller
         $patient = $diagnosisResult->patient;
         $assesment = $diagnosisResult->assesment;
         $this->authorize('view', $diagnosisResult);
+
+
+
+
+        $chartData = [
+            'epochs' => range(0, 9),
+            'train_accuracy' => [0.65, 0.70, 0.74, 0.78, 0.81, 0.84, 0.86, 0.88, 0.89, 0.91],
+            'val_accuracy' => [0.63, 0.68, 0.72, 0.75, 0.77, 0.80, 0.83, 0.85, 0.86, 0.87],
+            'train_loss' => [0.9, 0.8, 0.7, 0.6, 0.52, 0.45, 0.38, 0.32, 0.28, 0.25],
+            'val_loss' => [1.0, 0.9, 0.8, 0.72, 0.66, 0.6, 0.54, 0.5, 0.47, 0.45],
+        ];
         switch ($user->role->name) {
             case 'doctor':
                 return view('doctor.diagnosis_results.show', [
@@ -85,6 +96,7 @@ class DiagnosisResultController extends Controller
                     'patient' => $patient,
                     'assesment' => $assesment,
                     'user' => $user,
+                    'chartData' => $chartData,
                 ]);
 
             case 'admin':
@@ -93,6 +105,9 @@ class DiagnosisResultController extends Controller
                     'patient' => $patient,
                     'assesment' => $assesment,
                     'user' => $user,
+                    'chartData' => $chartData,
+
+
                 ]);
 
             default:

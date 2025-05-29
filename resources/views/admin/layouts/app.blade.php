@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>@yield('title')</title>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -199,10 +200,16 @@
                with font-awesome or any other icon font library -->
 
 
-               <li class="nav-item">
-                <a href="{{route('dashboard')}}" class="nav-link">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>Bosh sahifa</p>
+            <li class="nav-item">
+             <a href="{{route('dashboard')}}" class="nav-link">
+                 <i class="nav-icon fas fa-home"></i>
+                 <p>Bosh sahifa</p>
+             </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('patients.create') }}" class="nav-link">
+                    <i class="nav-icon fas fa-notes-medical"></i>
+                    <p>Tashxis qo‘yish</p>
                 </a>
             </li>
             <li class="nav-item">
@@ -420,5 +427,7 @@
 <script src="{{asset('adminlte/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('adminlte/dist/js/pages/dashboard.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@yield('scripts')
 </body>
 </html>
