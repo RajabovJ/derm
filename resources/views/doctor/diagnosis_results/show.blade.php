@@ -13,11 +13,12 @@
     </div><!-- /.col -->
   </div><!-- /.row -->
 @endsection
+
 @section('content')
 <div class="col-md-12">
     <div class="card card-primary card-outline shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h3 class="card-title">
+            <h3 class="card-title ">
                 <i class="fas fa-notes-medical mr-2"></i>
                 Tashxis natijalari
             </h3>
@@ -26,7 +27,7 @@
             <div class="row">
                 <!-- Vertical Nav Tabs -->
                 <div class="col-5 col-sm-3 border-right">
-                    <div class="nav flex-column nav-pills h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                    <div class= "nav flex-column nav-pills h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active d-flex align-items-center mb-2" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">
                             <i class="fas fa-user mr-2 text-primary"></i> Bemor maʼlumotlari
                         </a>
@@ -54,7 +55,7 @@
                         <!-- Bemor maʼlumotlari -->
                         <div class="tab-pane fade show active" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
                             <h4 class="mb-4 text-primary border-bottom pb-2"><i class="fas fa-user mr-2"></i>Bemor maʼlumotlari</h4>
-                            <dl class="row">
+                            <dl class="  row">
                                 <dt class="col-sm-4">Ismi:</dt>
                                 <dd class="col-sm-8">{{ $patient->name }}</dd>
 
@@ -194,17 +195,12 @@
                 </div>
             </div>
         </div>
-
     </div>
     <a href="{{ route('diagnosis.downloadPdf', $diagnosisResult->id) }}" class="btn btn-app bg-danger">
         <span class="badge bg-teal">PDF</span>
         <i class="fas fa-file-download"></i> Yuklab olish
     </a>
-
-
-
 </div>
-
 @endsection
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -294,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
             scales: {
                 y: {
                     beginAtZero: true
-                    // max limitni kerak bo'lsa qo'shishingiz mumkin
                 }
             }
         }

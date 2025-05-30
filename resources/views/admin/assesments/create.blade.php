@@ -16,7 +16,7 @@
 @endsection
 <link rel="stylesheet" href="{{asset('adminlte/plugins/bs-stepper/css/bs-stepper.min.css')}}">
 @section('content')
-<div style="font-size: 0.9rem;" class="col-md-12">
+<div class="col-md-12">
     <form action="{{ route('assesments.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 

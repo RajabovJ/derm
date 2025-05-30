@@ -16,10 +16,18 @@
 @endsection
 <link rel="stylesheet" href="{{asset('adminlte/plugins/bs-stepper/css/bs-stepper.min.css')}}">
 @section('content')
-<div style="font-size: 0.9rem;" class="col-md-12">
+<div  class="col-md-12">
     <form action="{{ route('assesments.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Tashxis qo'yish</h3>

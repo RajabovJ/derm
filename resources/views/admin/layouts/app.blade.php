@@ -26,6 +26,35 @@
   <link rel="stylesheet" href="{{asset('adminlte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
+  <style>
+    .responsive-font {
+    font-size: 12px;
+  }
+
+  @media (min-width: 576px) {
+    .responsive-font {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .responsive-font {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .responsive-font {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .responsive-font {
+      font-size: 17px;
+    }
+  }
+</style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -283,7 +312,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
+      <div class="responsive-font container-fluid">
         @yield('breadcrumb')
       </div><!-- /.container-fluid -->
     </div>
@@ -369,7 +398,7 @@
           </div>
 
         <!-- /.row -->
-        <div class="row">
+        <div class="responsive-font row">
             @yield('content')
         </div>
       </div><!-- /.container-fluid -->
