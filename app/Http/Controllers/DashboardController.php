@@ -13,10 +13,9 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $posts = Post::where('visibility', 'public')
-        ->orderBy('created_at', 'desc')
-        ->limit(5)
-        ->get();
+        $posts = Post::orderBy('created_at', 'desc')
+    ->limit(5)
+    ->get();
         $diagnosisResults = DiagnosisResult::whereHas('assesment', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })

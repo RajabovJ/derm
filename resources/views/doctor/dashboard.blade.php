@@ -189,7 +189,7 @@
                   <img src="{{asset('storage/'.$post->image_url)}}" alt="Post Image" class="img-size-50">
                 </div>
                 <div class="product-info">
-                  <a href="{{route('diagnosis-results.show',$post->id)}}" class="product-title"> {{ Str::limit($post->title, 90) }}
+                  <a href="{{route('posts.show',$post->id)}}" class="product-title"> {{ Str::limit($post->title, 90) }}
                     <span class="badge badge-warning float-right">{{$post->views}}</span></a>
                 </div>
               </li>

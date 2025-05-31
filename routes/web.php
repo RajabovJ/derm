@@ -35,19 +35,27 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::resource('assesments', AssesmentController::class);
     Route::resource('diagnosis-results', DiagnosisResultController::class);
     Route::resource('patients', PatientController::class);
+
     Route::resource('posts', PostController::class);
+    Route::get('/posts/{post}/{notificationId?}', [PostController::class, 'show'])->name('posts.show');
     Route::get('/alldiagnoses', [DiagnosisResultController::class, 'alldiagnoses'])->name('alldiagnoses');
     Route::get('/diagnosis/pdf/{id}', [DiagnosisResultController::class, 'downloadPdf'])->name('diagnosis.downloadPdf');
 
-    });
-
-    Route::middleware(['admin'])->group(function () {
-        Route::resource('users', UserController::class);
-        Route::post('/users/{user}/promote-to-admin', [UserController::class, 'promoteToAdmin'])->name('users.promoteToAdmin');
-        Route::post('/users/{user}/demote-from-admin', [UserController::class, 'demoteFromAdmin'])->name('users.demoteFromAdmin');
+    Route::get('/notifications/read-all', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return back();
+    })->name('notifications.readAll');
 });
+
+Route::middleware('admin')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::post('/users/{user}/promote-to-admin', [UserController::class, 'promoteToAdmin'])->name('users.promoteToAdmin');
+    Route::post('/users/{user}/demote-from-admin', [UserController::class, 'demoteFromAdmin'])->name('users.demoteFromAdmin');
+});
+
 
 require __DIR__.'/auth.php';

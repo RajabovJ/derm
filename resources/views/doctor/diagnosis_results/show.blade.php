@@ -168,29 +168,76 @@
                                     <dd class="col-sm-8">{{ $user->name }}</dd>
                                 </dl>
                             </div>
-
                             <div class="tab-pane fade" id="vert-tabs-ai-analysis" role="tabpanel" aria-labelledby="vert-tabs-ai-analysis-tab">
-                                <h4 class="mb-4 text-info border-bottom pb-2">
+                                <h4 class="text-info text-center border-bottom pb-2 mb-4">
                                     <i class="fas fa-robot mr-2"></i>AI Tahlil Natijalari
                                 </h4>
 
-                                <h3 class="card-title">Model Accuracy Grafigi</h3>
-                                <div style="width: 100%; max-width: 600px; height: 400px; margin-bottom: 40px;">
+                                <!-- Accuracy Chart -->
+                                <div class="chart-wrapper">
                                     <canvas id="accuracyChart"></canvas>
+                                    <div id="accuracyLegend" class="custom-legend mt-3"></div>
                                 </div>
 
-                                <h3 class="card-title">Model Loss Grafigi</h3>
-                                <div style="width: 100%; max-width: 600px; height: 400px;">
+                                <!-- Divider -->
+                                <hr class="divider">
+
+                                <!-- Loss Chart -->
+                                <div class="chart-wrapper">
                                     <canvas id="lossChart"></canvas>
+                                    <div id="lossLegend" class="custom-legend mt-3"></div>
                                 </div>
                             </div>
+
+                            <style>
+                           .chart-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    padding: 0 15px;
+    height: 400px; /* Yagona balandlik */
+    position: relative;
+}
+
+
+                            .divider {
+                                border: none;
+                                border-top: 2px solid #ccc;
+                                max-width: 800px;
+                                margin: 40px auto;
+                            }
+
+                            .custom-legend {
+                                display: flex;
+                                justify-content: center;
+                                flex-wrap: wrap;
+                                gap: 15px;
+                            }
+
+                            .custom-legend .legend-item {
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                                font-size: 14px;
+                            }
+
+                            .custom-legend .legend-color-box {
+                                width: 16px;
+                                height: 16px;
+                                border-radius: 3px;
+                            }
+                            </style>
+
+
+
+
+
+
                         <!-- Tashxis qo‘yish (forma joyi) -->
                             <div class="tab-pane fade" id="vert-tabs-diagnosis" role="tabpanel" aria-labelledby="vert-tabs-diagnosis-tab">
                             <h4 class="mb-4 text-warning border-bottom pb-2"><i class="fas fa-pen-alt mr-2"></i>Tashxis qo‘yish</h4>
                             <h5>Bu yerga forma joylashtiriladi</h5>
                             </div>
-
-
                     </div>
                 </div>
             </div>
@@ -204,96 +251,179 @@
 @endsection
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Grafiklar konteynerlari (sizda bor) -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const data = @json($chartData);
 
-    // Accuracy grafik uchun
+    function createLegend(containerId, datasets) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ''; // avvalgi legendani tozalash
+
+        datasets.forEach(ds => {
+            const item = document.createElement('div');
+            item.className = 'legend-item';
+
+            const box = document.createElement('span');
+            box.className = 'legend-color-box';
+            box.style.backgroundColor = ds.borderColor;
+
+            const label = document.createElement('span');
+            label.textContent = ds.label;
+
+            item.appendChild(box);
+            item.appendChild(label);
+            container.appendChild(item);
+        });
+    }
+
+    // Accuracy grafik
+    const accuracyDatasets = [
+        {
+            label: 'Train Accuracy',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            data: data.train_accuracy,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+        },
+        {
+            label: 'Validation Accuracy',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            data: data.val_accuracy,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+        }
+    ];
+
     const ctxAccuracy = document.getElementById('accuracyChart').getContext('2d');
     new Chart(ctxAccuracy, {
         type: 'line',
         data: {
             labels: data.epochs,
-            datasets: [
-                {
-                    label: 'Train Accuracy',
-                    data: data.train_accuracy,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                    tension: 0.3
-                },
-                {
-                    label: 'Validation Accuracy',
-                    data: data.val_accuracy,
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    fill: false,
-                    tension: 0.3
-                }
-            ]
+            datasets: accuracyDatasets
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Train vs Validation Accuracy'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 1
-                }
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: true,
+            text: 'Train vs Validation Accuracy',
+            font: { size: 18, weight: 'bold' }
+        },
+        tooltip: {
+            callbacks: {
+                label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(4)
             }
         }
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            max: 1,
+            ticks: {
+                stepSize: 0.1,
+                callback: val => val.toFixed(1),
+            },
+            title: {
+                display: false   // bu yerda y-o'q yozuvi o'chirildi
+            }
+        },
+        x: {
+            title: {
+                display: true,
+                text: 'Epoch',
+                font: { size: 14, weight: 'bold' }
+            }
+        }
+    }
+}
+
+
     });
 
+    createLegend('accuracyLegend', accuracyDatasets);
+
     // Loss grafik uchun
+    const lossDatasets = [
+        {
+            label: 'Train Loss',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            data: data.train_loss,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+        },
+        {
+            label: 'Validation Loss',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            data: data.val_loss,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+        }
+    ];
+
     const ctxLoss = document.getElementById('lossChart').getContext('2d');
     new Chart(ctxLoss, {
         type: 'line',
         data: {
             labels: data.epochs,
-            datasets: [
-                {
-                    label: 'Train Loss',
-                    data: data.train_loss,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                    tension: 0.3
-                },
-                {
-                    label: 'Validation Loss',
-                    data: data.val_loss,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                    tension: 0.3
-                }
-            ]
+            datasets: lossDatasets
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Train vs Validation Loss'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+        legend: { display: false },
+        title: {
+            display: true,
+            text: 'Train vs Validation Loss',
+            font: { size: 18, weight: 'bold' }
+        },
+        tooltip: {
+            callbacks: {
+                label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(4)
             }
         }
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            title: {
+                display: false  // y-o'q yozuvi o'chirildi
+            }
+        },
+        x: {
+            title: {
+                display: true,
+                text: 'Epoch',
+                font: { size: 14, weight: 'bold' }
+            }
+        }
+    }
+}
+
     });
+
+    createLegend('lossLegend', lossDatasets);
 });
+
 </script>
+
 @endsection

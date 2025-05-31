@@ -100,22 +100,52 @@
       </li>
 
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">0</span>
+    @php
+        $notifications = auth()->user()->unreadNotifications;
+    @endphp
+@php
+use Illuminate\Support\Str;
+@endphp
+
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        @if($notifications->count())
+            <span class="badge badge-warning navbar-badge">{{ $notifications->count() }}</span>
+        @else
+            <span class="badge badge-secondary navbar-badge">0</span>
+        @endif
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">
+            {{ $notifications->count() }} ta bildirishnoma
+        </span>
+        <div class="dropdown-divider"></div>
+
+        @forelse($notifications as $notification)
+            <a href="{{ route('posts.show', ['post' => $notification->data['post_id'], 'notificationId' => $notification->id]) }}" class="dropdown-item">
+                <i class="fas fa-envelope mr-2"></i>
+                {{ Str::limit($notification->data['title'] ?? 'Yangi xabar', 40) }}
+                <span class="float-right text-muted text-sm">
+                    {{ \Carbon\Carbon::parse($notification->created_at)->locale('uz')->diffForHumans() }}
+                </span>
+            </a>
+            <div class="dropdown-divider"></div>
+        @empty
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-info-circle mr-2"></i> Bildirishnoma yo'q
+                <span class="float-right text-muted text-sm">-</span>
+            </a>
+            <div class="dropdown-divider"></div>
+        @endforelse
+
+        <a href="{{ route('notifications.readAll') }}" class="dropdown-item dropdown-footer">
+            Barchasini o‘qildi deb belgilash
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">0 Bildirishnoma</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> Bildirishnoma yo'q
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">Barchasini ochish</a>
-        </div>
-      </li>
+    </div>
+</li>
+
+
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>

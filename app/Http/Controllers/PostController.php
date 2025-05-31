@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewPostNotification;
 
 class PostController extends Controller
 {
@@ -53,29 +55,52 @@ class PostController extends Controller
         } else {
             $data['image_url'] = 'post_images/default.jpg';
         }
-        Post::create($data);
+        $post = Post::create($data);
+        if ($post->visibility === 'doctor_only') {
+            $doctors = User::whereHas('role', function ($query) {
+                $query->where('name', 'doctor');
+            })->get();
+            foreach ($doctors as $doctor) {
+                $doctor->notify(new NewPostNotification($post));
+            }
+        }
         return redirect()->route('posts.index')->with('success', 'Post muvaffaqiyatli yaratildi.');
     }
-    public function show(Post $post)
+    public function show(Post $post, $notificationId = null)
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $this->authorize('view', $post);
         $post->increment('views');
+
+        if ($notificationId) {
+            // Agar bildirishnoma ID ko‘rsatilgan bo‘lsa — uni bevosita topib o‘qilgan deb belgilaymiz
+            $notification = $user->notifications->find($notificationId);
+            if ($notification) {
+                $notification->markAsRead();
+            }
+        } else {
+            // Aks holda, foydalanuvchining shu postga oid o‘qilmagan notification'ini topamiz
+            $notification = $user->unreadNotifications
+                ->first(function ($n) use ($post) {
+                    return isset($n->data['post_id']) && $n->data['post_id'] == $post->id;
+                });
+
+            if ($notification) {
+                $notification->markAsRead();
+            }
+        }
+
         switch ($user->role->name) {
             case 'doctor':
-                return view('doctor.posts.show', [
-                    'post'=>$post,
-                    'user'=>$user,
-                ]);
+                return view('doctor.posts.show', compact('post', 'user'));
             case 'admin':
-                return view('admin.posts.show', [
-                    'post'=>$post,
-                    'user'=>$user,
-                ]);
+                return view('admin.posts.show', compact('post', 'user'));
             default:
                 abort(403, 'Sizga bu sahifani ko‘rishga ruxsat berilmagan.');
-            }
+        }
     }
+
+
 
     public function edit(Post $post)
     {
