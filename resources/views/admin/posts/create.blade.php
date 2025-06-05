@@ -17,7 +17,7 @@
 <div class="col-md-12">
         <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="card card-primary">
+            <div class="card card-primary card-outline">
                 <div class="card-header">
                     <h3 class="card-title">Yangi Post Yaratish</h3>
                 </div>

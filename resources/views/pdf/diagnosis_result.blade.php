@@ -1,119 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>@yield('title')</title>
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/jqvmap/jqvmap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('adminlte/dist/css/adminlte.min.css')}}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/daterangepicker/daterangepicker.css')}}">
-  <!-- summernote -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
-  <style>
-    .responsive-font {
-    font-size: 12px;
-  }
-
-  @media (min-width: 576px) {
-    .responsive-font {
-      font-size: 14px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .responsive-font {
-      font-size: 15px;
-    }
-  }
-
-  @media (min-width: 992px) {
-    .responsive-font {
-      font-size: 16px;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .responsive-font {
-      font-size: 17px;
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <title>Diagnosis Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+        }
+        .table th, .table td {
+            padding: 6px;
+            vertical-align: top;
+        }
+        .img-preview {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+<body class="p-4">
 
+    <h2 class="text-center mb-4">Diagnosis Report</h2>
 
+    <div class="section-title">👤 Patient Information</div>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <th>Full Name</th><td>{{ $patient->fullname }}</td>
+        </tr>
+        <tr>
+            <th>Birth Date</th><td>{{ $patient->birth_date }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th><td>{{ $patient->gender }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th><td>{{ $patient->phone }}</td>
+        </tr>
+    </table>
 
+    <div class="section-title">📝 Assessment Details</div>
+    <table class="table table-bordered table-sm">
+        <tr><th>Location</th><td>{{ $assesment->location }}</td></tr>
+        <tr><th>Duration</th><td>{{ $assesment->duration }}</td></tr>
+        <tr><th>Evolution</th><td>{{ $assesment->evolution }}</td></tr>
+        <tr><th>Symptoms</th><td>{{ $assesment->symptoms }}</td></tr>
+        <tr><th>Bleeding</th><td>{{ $assesment->bleeding }}</td></tr>
+        <tr><th>Itching</th><td>{{ $assesment->itching }}</td></tr>
+    </table>
 
+    <div class="section-title">📊 Diagnosis Result</div>
+    <table class="table table-bordered table-sm">
+        <tr><th>Result</th><td>{{ $diagnosisResult->result }}</td></tr>
+        <tr><th>Confidence</th><td>{{ $diagnosisResult->confidence }}%</td></tr>
+    </table>
 
+    <div class="section-title">👨‍⚕️ Doctor Info</div>
+    <table class="table table-bordered table-sm">
+        <tr><th>Doctor Name</th><td>{{ $user->name }}</td></tr>
+        <tr><th>Email</th><td>{{ $user->email }}</td></tr>
+    </table>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- /.row -->
-        <div class="responsive-font row">
+    <div class="section-title">📈 Model Training Chart</div>
+    <p class="mb-2">Below is a performance graph based on training data:</p>
+    <div class="text-center">
+        {{-- Agar chart rasm bo‘lsa, uni base64 yoki public_path orqali joylashtiring --}}
+        <img src="{{ public_path('images/chart.png') }}" class="img-preview" alt="Chart">
+    </div>
 
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="{{asset('adminlte/plugins/jquery/jquery.min.js')}}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{asset('adminlte/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('adminlte/plugins/chart.js/Chart.min.js')}}"></script>
-<!-- Sparkline -->
-<script src="{{asset('adminlte/plugins/sparklines/sparkline.js')}}"></script>
-<!-- JQVMap -->
-<script src="{{asset('adminlte/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{asset('adminlte/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-<!-- daterangepicker -->
-<script src="{{asset('adminlte/plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- Summernote -->
-<script src="{{asset('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<!-- overlayScrollbars -->
-<script src="{{asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('adminlte/dist/js/adminlte.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('adminlte/dist/js/demo.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('adminlte/dist/js/pages/dashboard.js')}}"></script>
-@yield('scripts')
 </body>
 </html>

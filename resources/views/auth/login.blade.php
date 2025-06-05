@@ -69,7 +69,7 @@
 
     <div class="login-box">
         <div class="login-logo text-center mb-4">
-            <a href="{{route('dashboard')}}"><b>Derm</b>Log</a>
+            <a href="{{localized_route('dashboard')}}"><b>Derm</b>Log</a>
         </div>
 
         <div class="card">
@@ -87,7 +87,7 @@
                 <!-- O'ng taraf: login forma -->
                 <div class="col-md-7 p-5 bg-white">
                     <h4 class="text-center mb-4">Hisobga kirish</h4>
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ localized_route('login') }}" method="POST">
                         @csrf
 
                         <!-- Email -->
@@ -122,7 +122,7 @@
 
                     <!-- Ro'yxatdan o'tish tugmasi -->
                     <div class="text-center">
-                        <a href="{{ route('register') }}" class="btn btn-outline-secondary w-100">
+                        <a href="{{ localized_route('register') }}" class="btn btn-outline-secondary w-100">
                             Ro'yxatdan o'tish
                         </a>
                     </div>

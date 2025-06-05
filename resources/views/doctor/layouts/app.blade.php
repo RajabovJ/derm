@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="{{asset('adminlte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
+
+  <link rel="stylesheet" href="{{asset('adminlte/plugins/flag-icon-css/css/flag-icon.min.css')}}">
+
   <style>
     .responsive-font {
     font-size: 12px;
@@ -68,10 +71,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('dashboard')}}" class="nav-link">Bosh sahifa</a>
+        <a href="{{localized_route('dashboard')}}" class="nav-link">{{__("Bosh sahifa")}}</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="https://t.me/jamshid_rajabov" target="_blank" class="nav-link">Bog'lanish</a>
+        <a href="https://t.me/jamshid_rajabov" target="_blank" class="nav-link">{{__("Bog'lanish")}}</a>
       </li>
     </ul>
 
@@ -100,57 +103,113 @@
       </li>
 
       <!-- Notifications Dropdown Menu -->
-    @php
-        $notifications = auth()->user()->unreadNotifications;
-    @endphp
-@php
-use Illuminate\Support\Str;
-@endphp
+        @php
+            use Illuminate\Support\Str;
+            $notifications = auth()->user()->unreadNotifications;
+        @endphp
 
-<li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="far fa-bell"></i>
-        @if($notifications->count())
-            <span class="badge badge-warning navbar-badge">{{ $notifications->count() }}</span>
-        @else
-            <span class="badge badge-secondary navbar-badge">0</span>
-        @endif
-    </a>
-    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-item dropdown-header">
-            {{ $notifications->count() }} ta bildirishnoma
-        </span>
-        <div class="dropdown-divider"></div>
-
-        @forelse($notifications as $notification)
-            <a href="{{ route('posts.show', ['post' => $notification->data['post_id'], 'notificationId' => $notification->id]) }}" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i>
-                {{ Str::limit($notification->data['title'] ?? 'Yangi xabar', 40) }}
-                <span class="float-right text-muted text-sm">
-                    {{ \Carbon\Carbon::parse($notification->created_at)->locale('uz')->diffForHumans() }}
+    <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            @if($notifications->count())
+                <span class="badge badge-warning navbar-badge">{{ $notifications->count() }}</span>
+            @else
+                <span class="badge badge-secondary navbar-badge">0</span>
+            @endif
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">
+                    {{ $notifications->count() }} ta bildirishnoma
                 </span>
-            </a>
-            <div class="dropdown-divider"></div>
-        @empty
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-info-circle mr-2"></i> Bildirishnoma yo'q
-                <span class="float-right text-muted text-sm">-</span>
-            </a>
-            <div class="dropdown-divider"></div>
-        @endforelse
-
-        <a href="{{ route('notifications.readAll') }}" class="dropdown-item dropdown-footer">
-            Barchasini o‘qildi deb belgilash
+                <div class="dropdown-divider"></div>
+                @forelse($notifications as $notification)
+                    <a href="{{ localized_route('posts.show', ['post' => $notification->data['post_id'], 'notificationId' => $notification->id]) }}" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i>
+                        {{ Str::limit($notification->data['title'] ?? 'Yangi xabar', 40) }}
+                        <span class="float-right text-muted text-sm">
+                            {{ \Carbon\Carbon::parse($notification->created_at)->locale('uz')->diffForHumans() }}
+                        </span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                @empty
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-info-circle mr-2"></i> {{__("Bildirishnoma yo'q")}}
+                        <span class="float-right text-muted text-sm">-</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                @endforelse
+                <a href="{{ localized_route('notifications.readAll') }}" class="dropdown-item dropdown-footer">
+                {{__("Barchasini o‘qildi deb belgilash")}}
+                </a>
+            </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="flag-icon
+                @if(app()->getLocale() == 'uz') flag-icon-uz
+                @elseif(app()->getLocale() == 'ru') flag-icon-ru
+                @else flag-icon-us
+                @endif"></i>
         </a>
-    </div>
-</li>
+        <div class="dropdown-menu dropdown-menu-right p-0">
+            <a href="{{ localized_route(Route::currentRouteName(), Route::current()->parameters(), 'uz') }}"
+               class="dropdown-item {{ app()->getLocale() == 'uz' ? 'active' : '' }}">
+                <i class="flag-icon flag-icon-uz mr-2"></i> {{ __("O'zbekcha") }}
+            </a>
+            <a href="{{ localized_route(Route::currentRouteName(), Route::current()->parameters(), 'en') }}"
+               class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}">
+                <i class="flag-icon flag-icon-us mr-2"></i> {{ __("Inglizcha") }}
+            </a>
+            <a href="{{ localized_route(Route::currentRouteName(), Route::current()->parameters(), 'ru') }}"
+               class="dropdown-item {{ app()->getLocale() == 'ru' ? 'active' : '' }}">
+                <i class="flag-icon flag-icon-ru mr-2"></i> {{ __("Ruscha") }}
+            </a>
+        </div>
+    </li>
 
 
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
+
+    <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img src="{{ asset('storage/' . $user->image->url) }}" class="user-image img-circle elevation-2" alt="User Image">
+                <span class="d-none d-md-inline">{{ $user->name . ' ' . $user->surname }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    <img src="{{ asset('storage/' . $user->image->url) }}" class="img-circle elevation-2" alt="User Image">
+                    <p>
+                        {{ $user->name . ' ' . $user->surname }}
+                        <small>{{ $user->created_at->format('d.m.Y') }} {{__("dan beri foydalanuvchi")}}</small>
+                    </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <a href="{{ localized_route('dashboard') }}">{{ __("Bosh sahifa") }}</a>
+                        </div>
+                        <div class="col-4 text-center">
+                            <a href="{{ localized_route('patients.create') }}">{{ __("Tashxis qo'yish") }}</a>
+                        </div>
+                        <div class="col-4 text-center">
+                            <a href="{{ localized_route('patients.index') }}">{{ __("Mening bemorlarim") }}</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- Menu Footer -->
+                <li class="user-footer">
+                    <a href="{{ localized_route('profile.edit') }}" class="btn btn-default btn-flat">{{__("Profil")}}</a>
+
+                    <form action="{{ localized_route('logout') }}" method="POST" class="d-inline float-right">
+                        @csrf
+                        <button type="submit" class="btn btn-default btn-flat">{{__("Chiqish")}}</button>
+                    </form>
+                </li>
+            </ul>
+    </li>
+
+
 
     </ul>
   </nav>
@@ -168,7 +227,7 @@ use Illuminate\Support\Str;
             <img src="{{ $user->image->url ? asset('storage/' . $user->image->url) : asset('storage/profile_images/default.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{route('dashboard')}}" class="d-block">{{$user->name.' '. $user->surname}}</a>
+          <a href="{{localized_route('dashboard')}}" class="d-block">{{$user->name.' '. $user->surname}}</a>
         </div>
       </div>
 
@@ -192,26 +251,26 @@ use Illuminate\Support\Str;
 
 
             <li class="nav-item">
-                <a href="{{route('dashboard')}}" class="nav-link">
+                <a href="{{localized_route('dashboard')}}" class="nav-link">
                     <i class="nav-icon fas fa-home"></i>
-                    <p>Bosh sahifa</p>
+                    <p>{{__("Bosh sahifa")}}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('patients.create') }}" class="nav-link">
+                <a href="{{ localized_route('patients.create') }}" class="nav-link">
                     <i class="nav-icon fas fa-notes-medical"></i>
                     <p>Tashxis qo‘yish</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('diagnosis-results.index')}}" class="nav-link">
+                <a href="{{localized_route('diagnosis-results.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-history"></i>
                     <p>Jami urinishlarim</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{route('patients.index')}}" class="nav-link">
+                <a href="{{localized_route('patients.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-user-injured"></i>
                     <p>Mening bemorlarim</p>
                 </a>
@@ -220,14 +279,14 @@ use Illuminate\Support\Str;
 
 
             <li class="nav-item">
-                <a href="{{route('posts.index')}}" class="nav-link">
+                <a href="{{localized_route('posts.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-bullhorn"></i>
                     <p>E'lonlar</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{route('mel.images')}}" class="nav-link">
+                <a href="{{localized_route('mel.images')}}" class="nav-link">
                     <i class="nav-icon fas fa-diagnoses"></i>
                     <p>API (Melanoma tasvirlar)</p>
                 </a>
@@ -236,12 +295,12 @@ use Illuminate\Support\Str;
 
 
             <li class="nav-item">
-                <a href="{{ route('logout') }}" class="nav-link"
+                <a href="{{ localized_route('logout') }}" class="nav-link"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
                     <p>Chiqish</p>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ localized_route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </li>
@@ -297,7 +356,7 @@ use Illuminate\Support\Str;
                 <div class="icon">
                   <i class="nav-icon fas fa-history"></i>
                 </div>
-                <a href="{{route('diagnosis-results.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('diagnosis-results.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -311,7 +370,7 @@ use Illuminate\Support\Str;
                 <div class="icon">
                   <i class="fas fa-user-injured"></i>
                 </div>
-                <a href="{{route('patients.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('patients.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -325,7 +384,7 @@ use Illuminate\Support\Str;
                 <div class="icon">
                   <i class="nav-icon fas fa-diagnoses"></i>
                 </div>
-                <a href="{{route('mel.images')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('mel.images')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -339,7 +398,7 @@ use Illuminate\Support\Str;
                 <div class="icon">
                   <i class="fas fa-bullhorn"></i>
                 </div>
-                <a href="{{route('posts.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('posts.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -354,7 +413,7 @@ use Illuminate\Support\Str;
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2025-2026 <a href="{{route('dashboard')}}">DermLog</a>.</strong>
+    <strong>Copyright &copy; 2025-2026 <a href="{{localized_route('dashboard')}}">DermLog</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0

@@ -16,7 +16,7 @@
 @section('content')
 <div class="col-md-12">
     <div class="card card-primary card-outline shadow-sm">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-notes-medical mr-2"></i>
                 Tashxis natijalari
