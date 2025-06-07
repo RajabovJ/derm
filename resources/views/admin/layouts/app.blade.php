@@ -69,7 +69,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('dashboard')}}" class="nav-link">Bosh sahifa</a>
+        <a href="{{localized_route('dashboard')}}" class="nav-link">Bosh sahifa</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="https://t.me/jamshid_rajabov" target="_blank" class="nav-link">Bog'lanish</a>
@@ -120,7 +120,7 @@
               </span>
               <div class="dropdown-divider"></div>
               @forelse($notifications as $notification)
-                  <a href="{{ route('posts.show', ['post' => $notification->data['post_id'], 'notificationId' => $notification->id]) }}" class="dropdown-item">
+                  <a href="{{ localized_route('posts.show', ['post' => $notification->data['post_id'], 'notificationId' => $notification->id]) }}" class="dropdown-item">
                       <i class="fas fa-envelope mr-2"></i>
                       {{ Str::limit($notification->data['title'] ?? 'Yangi xabar', 40) }}
                       <span class="float-right text-muted text-sm">
@@ -135,7 +135,7 @@
                   </a>
                   <div class="dropdown-divider"></div>
               @endforelse
-              <a href="{{ route('notifications.readAll') }}" class="dropdown-item dropdown-footer">
+              <a href="{{ localized_route('notifications.readAll') }}" class="dropdown-item dropdown-footer">
               Barchasini o‘qildi deb belgilash
               </a>
           </div>
@@ -158,21 +158,21 @@
               <li class="user-body">
                   <div class="row">
                       <div class="col-4 text-center">
-                          <a href="{{ route('dashboard') }}">Bosh sahifa</a>
+                          <a href="{{ localized_route('dashboard') }}">Bosh sahifa</a>
                       </div>
                       <div class="col-4 text-center">
-                          <a href="{{ route('patients.create') }}">Tashxis qo'yish</a>
+                          <a href="{{ localized_route('patients.create') }}">Tashxis qo'yish</a>
                       </div>
                       <div class="col-4 text-center">
-                          <a href="{{ route('patients.index') }}">Mening bemorlarim</a>
+                          <a href="{{ localized_route('patients.index') }}">Mening bemorlarim</a>
                       </div>
                   </div>
               </li>
               <!-- Menu Footer -->
               <li class="user-footer">
-                  <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profil</a>
+                  <a href="{{ localized_route('profile.edit') }}" class="btn btn-default btn-flat">Profil</a>
 
-                  <form action="{{ route('logout') }}" method="POST" class="d-inline float-right">
+                  <form action="{{ localized_route('logout') }}" method="POST" class="d-inline float-right">
                       @csrf
                       <button type="submit" class="btn btn-default btn-flat">Chiqish</button>
                   </form>
@@ -223,26 +223,26 @@
 
 
             <li class="nav-item">
-             <a href="{{route('dashboard')}}" class="nav-link">
+             <a href="{{localized_route('dashboard')}}" class="nav-link">
                  <i class="nav-icon fas fa-home"></i>
                  <p>Bosh sahifa</p>
              </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('patients.create') }}" class="nav-link">
+                <a href="{{ localized_route('patients.create') }}" class="nav-link">
                     <i class="nav-icon fas fa-notes-medical"></i>
                     <p>Tashxis qo‘yish</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('diagnosis-results.index')}}" class="nav-link">
+                <a href="{{localized_route('diagnosis-results.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-history"></i>
                     <p>Jami urinishlarim</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{route('patients.index')}}" class="nav-link">
+                <a href="{{localized_route('patients.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-user-injured"></i>
                     <p>Mening bemorlarim</p>
                 </a>
@@ -251,44 +251,44 @@
 
 
             <li class="nav-item">
-                <a href="{{route('posts.index')}}" class="nav-link">
+                <a href="{{localized_route('posts.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-bullhorn"></i>
                     <p>E'lonlar</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{route('mel.images')}}" class="nav-link">
+                <a href="{{localized_route('mel.images')}}" class="nav-link">
                     <i class="nav-icon fas fa-diagnoses"></i>
                     <p>API (Melanoma tasvirlar)</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('users.index')}}" class="nav-link">
+                <a href="{{localized_route('users.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Foydalanuvchilar</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('alldiagnoses') }}" class="nav-link">
+                <a href="{{ localized_route('alldiagnoses') }}" class="nav-link">
                     <i class="nav-icon fas fa-notes-medical"></i>
                     <p>Tashxislar</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('posts.create') }}" class="nav-link">
+                <a href="{{ localized_route('posts.create') }}" class="nav-link">
                     <i class="nav-icon fas fa-edit"></i>
                     <p>Post yaratish</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('logout') }}" class="nav-link"
+                <a href="{{ localized_route('logout') }}" class="nav-link"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
                     <p>Chiqish</p>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ localized_route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </li>
@@ -343,7 +343,7 @@
                 <div class="icon">
                   <i class="nav-icon fas fa-history"></i>
                 </div>
-                <a href="{{route('diagnosis-results.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('diagnosis-results.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -357,7 +357,7 @@
                 <div class="icon">
                   <i class="fas fa-user-injured"></i>
                 </div>
-                <a href="{{route('patients.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('patients.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -371,7 +371,7 @@
                 <div class="icon">
                   <i class="nav-icon fas fa-diagnoses"></i>
                 </div>
-                <a href="{{route('mel.images')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('mel.images')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -385,7 +385,7 @@
                 <div class="icon">
                   <i class="fas fa-bullhorn"></i>
                 </div>
-                <a href="{{route('posts.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{localized_route('posts.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -400,7 +400,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2025-2026 <a href="{{route('dashboard')}}">DermLog</a>.</strong>
+    <strong>Copyright &copy; 2025-2026 <a href="{{localized_route('dashboard')}}">DermLog</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0

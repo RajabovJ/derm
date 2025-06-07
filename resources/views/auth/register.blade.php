@@ -88,7 +88,7 @@
 
         <div class="card">
           <div class="card-body register-card-body">
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ localized_route('register') }}" method="POST">
               @csrf
 
               {{-- Ism --}}
@@ -180,7 +180,7 @@
               </div>
           </form>
 
-            <a href="{{route('login')}}" class="btn btn-outline-secondary w-100">Kirish</a>
+            <a href="{{localized_route('login')}}" class="btn btn-outline-secondary w-100">Kirish</a>
           </div>
           <!-- /.form-box -->
         </div><!-- /.card -->

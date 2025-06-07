@@ -79,8 +79,9 @@ class DiagnosisResultController extends Controller
     public function store(StoreDiagnosisResultRequest $request)
     {
     }
-    public function show(DiagnosisResult $diagnosisResult)
+    public function show( $locale, DiagnosisResult $diagnosisResult)
     {
+
         $user = Auth::user();
         $patient = $diagnosisResult->patient;
         $assesment = $diagnosisResult->assesment;
@@ -104,6 +105,8 @@ class DiagnosisResultController extends Controller
                     'assesment' => $assesment,
                     'user' => $user,
                     'chartData' => $chartData,
+                    'labels' => ['akiec', 'bcc', 'bkl', 'df', 'nv', 'vasc', 'mel'],
+                    'probabilities' => json_decode($diagnosisResult->probabilities, true),
                 ]);
 
             case 'admin':

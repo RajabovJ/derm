@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Bemor qo'shish</li>
       </ol>
     </div>
@@ -21,7 +21,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <form action="{{ route('patients.store') }}" method="POST">
+    <form action="{{ localized_route('patients.store') }}" method="POST">
         @csrf
         <div class="card card-primary card-outline">
             <div class="card-header">
@@ -121,7 +121,7 @@
                 <button type="submit" class="btn btn-success mr-2">
                     <i class="fas fa-save"></i> Saqlash
                 </button>
-                <a href="{{ route('assesments.create') }}" class="btn btn-outline-primary">
+                <a href="{{ localized_route('assesments.create') }}" class="btn btn-outline-primary">
                     <i class="fas fa-forward"></i> O‘tkazib yuborish
                 </a>
             </div>

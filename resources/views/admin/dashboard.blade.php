@@ -7,7 +7,7 @@
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item active"><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item active"><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
       </ol>
     </div><!-- /.col -->
   </div><!-- /.row -->
@@ -139,7 +139,7 @@
                     @endphp
 
                     <tr>
-                        <td><a href="{{ route('diagnosis-results.show', $diagnosisResult->id) }}">{{ $diagnosisResult->id }}</a></td>
+                        <td><a href="{{ localized_route('diagnosis-results.show', $diagnosisResult->id) }}">{{ $diagnosisResult->id }}</a></td>
                         <td>{{ $diagnosisResult->patient->name . ' ' . $diagnosisResult->patient->surname }}</td>
                         <td><span class="badge {{ $badgeClass }}">{{ $label }}</span></td>
                         <td>{{ $diagnosisResult->created_at->format('d.m.Y H:i') }}</td>
@@ -153,8 +153,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="{{route('patients.create')}}" class="btn btn-sm btn-info float-left">Tashxis qo'yish</a>
-              <a href="{{route('diagnosis-results.index')}}" class="btn btn-sm btn-secondary float-right">Jami urinishlarim</a>
+              <a href="{{localized_route('patients.create')}}" class="btn btn-sm btn-info float-left">Tashxis qo'yish</a>
+              <a href="{{localized_route('diagnosis-results.index')}}" class="btn btn-sm btn-secondary float-right">Jami urinishlarim</a>
             </div>
             <!-- /.card-footer -->
         </div>
@@ -235,7 +235,7 @@
                   <img src="{{asset('storage/'.$post->image_url)}}" alt="Post Image" class="img-size-50">
                 </div>
                 <div class="product-info">
-                  <a href="{{route('diagnosis-results.show',$post->id)}}" class="product-title"> {{ Str::limit($post->title, 90) }}
+                  <a href="{{localized_route('diagnosis-results.show',$post->id)}}" class="product-title"> {{ Str::limit($post->title, 90) }}
                     <span class="badge badge-warning float-right">{{$post->views}}</span></a>
                 </div>
               </li>
@@ -245,7 +245,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer text-center">
-          <a href="{{route('posts.index')}}" class="uppercase">Ko'proq...</a>
+          <a href="{{localized_route('posts.index')}}" class="uppercase">Ko'proq...</a>
         </div>
         <!-- /.card-footer -->
     </div>

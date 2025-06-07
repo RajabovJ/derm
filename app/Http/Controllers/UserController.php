@@ -58,11 +58,13 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Foydalanuvchi muvaffaqiyatli o‘chirildi.');
+        return redirect()->to(localized_route('users.index'))
+        ->with('success', __('Foydalanuvchi muvaffaqiyatli o‘chirildi.'));
+
     }
 
 
-    public function promoteToAdmin(User $user)
+    public function promoteToAdmin($locale,User $user)
     {
         $this->authorize('update', $user);
         if ($user->role && $user->role->name === 'doctor') {
@@ -77,7 +79,7 @@ class UserController extends Controller
         return redirect()->back()->with('error', 'Faqat doctorlar admin qilinishi mumkin.');
     }
 
-    public function demoteFromAdmin(User $user)
+    public function demoteFromAdmin($locale, User $user)
     {
         $this->authorize('update', $user);
         if ($user->id === auth()->id()) {

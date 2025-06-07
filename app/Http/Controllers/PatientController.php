@@ -86,9 +86,11 @@ class PatientController extends Controller
                 'gender' => $data['gender'],
             ]
     );
-    return redirect()->route('assesments.create')->with('success', 'Bemor muvaffaqiyatli saqlandi!');
-    }
-    public function show(Patient $patient)
+    return redirect()->to(localized_route('assesments.create'))
+    ->with('success', __('Bemor muvaffaqiyatli saqlandi!'));
+
+}
+    public function show($locale, Patient $patient)
     {
         $user = Auth::user();
         $assesments = Assesment::where('patient_id', $patient->id)

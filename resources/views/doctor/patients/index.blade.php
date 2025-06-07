@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Mening bemorlarim</li>
       </ol>
     </div>
@@ -46,7 +46,7 @@
             </thead>
             <tbody>
                 @foreach ($patients as $index => $patient)
-                <tr onclick="window.location='{{ route('patients.show', $patient->id) }}'" style="cursor: pointer;">
+                <tr onclick="window.location='{{ localized_route('patients.show', $patient->id) }}'" style="cursor: pointer;">
                     <td>{{ $loop->iteration + ($patients->currentPage() - 1) * $patients->perPage() }}</td>
                     <td>{{ $patient->name . ' ' . $patient->surname }}</td>
                     <td>{{ $patient->passport }}</td>

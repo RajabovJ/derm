@@ -1,5 +1,5 @@
 @forelse ($users as $index => $user)
-    <tr onclick="window.location='{{ route('users.show', $user->id) }}'" style="cursor:pointer;">
+    <tr onclick="window.location='{{ localized_route('users.show', $user->id) }}'" style="cursor:pointer;">
         <td>{{ $users->firstItem() + $index }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
@@ -12,7 +12,7 @@
         </td>
         <td>{{ $user->created_at->format('Y-m-d') }}</td>
         <td>
-            <form method="POST" action="{{ route('users.destroy', $user->id) }}" onsubmit="return confirm('Haqiqatan o‘chirmoqchimisiz?')">
+            <form method="POST" action="{{ localized_route('users.destroy', $user->id) }}" onsubmit="return confirm('Haqiqatan o‘chirmoqchimisiz?')">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm">

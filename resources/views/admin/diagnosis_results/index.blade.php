@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Jami urinishlarim</li>
       </ol>
     </div>
@@ -68,7 +68,7 @@
                                 </td>
                                 <td>{{ $diagnosisResult->created_at->format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <a href="{{ route('diagnosis-results.show', $diagnosisResult->id) }}"
+                                    <a href="{{ localized_route('diagnosis-results.show', $diagnosisResult->id) }}"
                                        class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-eye"></i> Batafsil
                                     </a>

@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Foydalanuvchilar</li>
       </ol>
     </div>
@@ -20,7 +20,7 @@
             <h3 class="card-title">Foydalanuvchilar ro'yxati</h3>
 
             <div class="card-tools">
-                <form method="GET" action="{{ route('users.index') }}">
+                <form method="GET" action="{{ localized_route('users.index') }}">
                     <div class="input-group input-group-sm" style="width: 250px;">
                         <input type="text" name="search" class="form-control float-right" placeholder="Ism yoki email..."
                             value="{{ request('search') }}">
@@ -64,17 +64,17 @@
                             <td>
                                 <div class="d-flex align-items-center gap-1">
                                     <!-- Ko'rish tugmasi -->
-                                <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm" title="Ko‘rish">
+                                <a href="{{ localized_route('users.show', $user->id) }}" class="btn btn-info btn-sm" title="Ko‘rish">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tahrirlash tugmasi -->
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm ml-1" title="Tahrirlash">
+                                <a href="{{ localized_route('users.edit', $user->id) }}" class="btn btn-primary btn-sm ml-1" title="Tahrirlash">
                                     <i class="fas fa-edit"></i>
                                 </a>
 
                                 <!-- O'chirish tugmasi -->
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                <form action="{{ localized_route('users.destroy', $user->id) }}" method="POST"
                                       onsubmit="return confirm('Haqiqatan ham o‘chirmoqchimisiz?')"
                                       style="display:inline-block;">
                                     @csrf
@@ -86,14 +86,14 @@
 
                                 <!-- Adminlikni berish yoki olib tashlash -->
                                 @if ($user->role->name === 'doctor')
-                                    <form action="{{ route('users.promoteToAdmin', $user->id) }}" method="POST" style="display:inline-block;" class="ml-1">
+                                    <form action="{{ localized_route('users.promoteToAdmin', $user->id) }}" method="POST" style="display:inline-block;" class="ml-1">
                                         @csrf
                                         <button type="submit" class="btn btn-warning btn-sm" title="Admin sifatida tanlash">
                                             <i class="fas fa-user-shield"></i>
                                         </button>
                                     </form>
                                 @elseif ($user->role->name === 'admin')
-                                    <form action="{{ route('users.demoteFromAdmin', $user->id) }}" method="POST" style="display:inline-block;" class="ml-1">
+                                    <form action="{{ localized_route('users.demoteFromAdmin', $user->id) }}" method="POST" style="display:inline-block;" class="ml-1">
                                         @csrf
                                         <button type="submit" class="btn btn-secondary btn-sm" title="Adminlikni olib tashlash">
                                             <i class="fas fa-user-slash"></i>

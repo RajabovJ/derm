@@ -14,6 +14,9 @@ return new class extends Migration
             $table->foreignId('assesment_id')->constrained('assesments')->onDelete('cascade');
             $table->string('result');
             $table->text('message')->nullable();
+            $table->longText('segmentation_mask')->nullable();
+            $table->longText('extracted_lesion')->nullable();
+            $table->json('probabilities')->nullable();
             $table->timestamps();
         });
     }

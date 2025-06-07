@@ -82,45 +82,97 @@ class AssesmentController extends Controller
             ]);
         }
         $image = $request->file('lesion_photo');
-        try {
-            $response = Http::timeout(100)
-            ->attach(
-                'image',
-                file_get_contents($image->getPathname()),
-                $image->getClientOriginalName()
-            )
-            ->post('https://scm.itorda.uz/api/predict/');
+// try {
+//     $response = Http::timeout(1000)
+//         ->attach(
+//             'image',
+//             file_get_contents($image->getPathname()),
+//             $image->getClientOriginalName()
+//         )
+//         ->post('https://007f-34-21-30-179.ngrok-free.app/api/predict/');
 
-            if ($response->successful()) {
-                $responseData = $response->json();
+//     if ($response->successful()) {
+//         $responseData = $response->json();
+//         $diagnosisResult = DiagnosisResult::create([
+//             'patient_id' => $patient->id,
+//             'assesment_id' => $assesment->id,
+//             'result' => $responseData['class'],
+//             'segmentation_mask' => $responseData['segmentation_mask'],
+//             'probabilities' => $responseData['probabilities'],
+//             'message' => $responseData['description'] ?? null,
 
-                $diagnosisResult = DiagnosisResult::create([
-                    'patient_id' => $patient->id,
-                    'assesment_id' => $assesment->id,
-                    'result' => $responseData['class'],
-                    'message' => $responseData['description'] ?? null,
-                ]);
+//         ]);
 
-                return redirect()->route('diagnosis-results.show', ['diagnosis_result' => $diagnosisResult->id])
-                    ->with('success', 'Ma’lumotlar muvaffaqiyatli saqlandi!');
-            } else {
-                return redirect()->back()->with('error', 'Modeldan javob kelmadi. Keyinroq yana urinib ko‘ring.');
-            }
-        } catch (\Illuminate\Http\Client\RequestException $e) {
-            Log::error('Render.com API xatosi: ' . $e->getMessage());
+//         return redirect()->to(localized_route('diagnosis-results.show', [
+//             'diagnosis_result' => $diagnosisResult->id,
+//             ]))
+//             ->with('success', __('Ma\'lumotlar muvaffaqiyatli saqlandi!'));
+//     } else {
+//         return redirect()->back()->with('error', 'Modeldan javob kelmadi. Keyinroq yana urinib ko‘ring.');
+//     }
+// } catch (\Exception $e) {
+//     Log::error('Render.com API xatosi: ' . $e->getMessage());
 
-            return redirect()->back()->with('error', 'Model ishga tushmagan yoki hozircha mavjud emas. Iltimos, biroz kutib qayta urinib ko‘ring.');
-        }
+//     return redirect()->back()->with('error', 'Model ishga tushmagan yoki hozircha mavjud emas. Iltimos, biroz kutib qayta urinib ko‘ring.');
+// }
 
-        $responseData = $response->json();
+try {
+    $response = Http::timeout(30)
+        ->attach(
+            'image',
+            file_get_contents($image->getRealPath()),
+            $image->getClientOriginalName()
+        )
+        ->post('http://127.0.0.1:8000/api/predict/');
+
+    if ($response->successful()) {
+        $data = $response->json();
+
         $diagnosisResult = DiagnosisResult::create([
-            'patient_id' => $patient->id,
-            'assesment_id' => $assesment->id,
-            'result' => $responseData['class'],
-            'message' => $responseData['description'] ?? null,
+            'patient_id'        => $patient->id,
+            'assesment_id'      => $assesment->id,
+            'result'            => $data['class'] ?? null,
+            'segmentation_mask' => $data['segmentation_mask'] ?? null,
+            'extracted_lesion' => $data['extracted_lesion'] ?? null,
+            'probabilities'     => json_encode($data['probabilities'] ?? []),
+            'message'           => $data['description'] ?? null,
         ]);
-        return redirect()->route('diagnosis-results.show', ['diagnosis_result' => $diagnosisResult->id])
-        ->with('success', 'Maʼlumotlar muvaffaqiyatli saqlandi!');
+
+        return redirect()->to(localized_route('diagnosis-results.show', [
+            'diagnosis_result' => $diagnosisResult->id,
+        ]))
+        ->with('success', __('Ma\'lumotlar muvaffaqiyatli saqlandi!'));
+
+    }
+
+    Log::warning('FastAPI javob bermadi: ' . $response->body());
+
+    return redirect()->back()->with(
+        'error',
+        __('Modeldan javob olinmadi. Iltimos, keyinroq urinib ko‘ring.')
+    );
+} catch (\Throwable $e) {
+    Log::error('Model API chaqiruvida xatolik: ' . $e->getMessage());
+
+    return redirect()->back()->with(
+        'error',
+        __('Model ishga tushmagan yoki hozircha mavjud emas. Iltimos, birozdan so‘ng yana urinib ko‘ring.')
+    );
+}
+
+
+        // $responseData = $response->json();
+        // $diagnosisResult = DiagnosisResult::create([
+        //     'patient_id' => $patient->id,
+        //     'assesment_id' => $assesment->id,
+        //     'result' => $responseData['class'],
+        //     'segmentation_mask' => $responseData['segmentation_mask'],
+        //     'probabilities' => $responseData['probabilities'],
+        //     'message' => $responseData['description'] ?? null,
+        // ]);
+        // return redirect()->to(localized_route('diagnosis-results.show', [ 'diagnosis_result' => $diagnosisResult->id,
+        // 'labels' => ['akiec', 'bcc', 'bkl', 'df', 'nv', 'vasc', 'mel'],]))
+        // ->with('success', __('Maʼlumotlar muvaffaqiyatli saqlandi!'));
 
     }
 

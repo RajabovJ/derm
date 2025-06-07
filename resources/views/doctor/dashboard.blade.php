@@ -19,7 +19,7 @@
     <div class="card card-outline card-primary shadow-sm">
    <div class="card-header border-transparent" >
                 <h3 class="card-title">
-                    <i class="fas fa-project-diagram mr-2"></i> Loyiha haqida
+                    <i class="fas fa-project-diagram mr-2"></i> {{__("Loyiha haqida")}}
                 </h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -33,45 +33,46 @@
             <div class="card-body">
 
                 <p>
-                    Ushbu loyiha sun’iy intellekt texnologiyalaridan foydalangan holda <strong>teri kasalliklarini tasvir asosida aniqlash</strong> imkonini beradi. Asosiy maqsad — shifokorlarning tashxis qo‘yishdagi ishini yengillashtirish va xatoliklarni kamaytirishdir.
+                    {{__("Ushbu loyiha sun’iy intellekt texnologiyalaridan foydalangan holda <strong>teri kasalliklarini tasvir asosida aniqlash")}}</strong> {{__("imkonini beradi. Asosiy maqsad — shifokorlarning tashxis qo‘yishdagi ishini yengillashtirish va xatoliklarni kamaytirishdir.")}}
                 </p>
 
                 <hr>
 
-                <h5><strong>Asosiy funksiyalari:</strong></h5>
+                <h5><strong>{{__("Asosiy funksiyalari:")}}</strong></h5>
                 <ul class="mb-3 list-unstyled">
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Rasm yuklash orqali avtomatik tashxis qo‘yish</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Tashxis natijalarini saqlash va tarixini ko‘rish</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Tashxisga asoslangan tavsiyalar</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Foydalanuvchi uchun oddiy va tushunarli interfeys</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Melanoma tashxisli tasvirlardan API orqali foydalanish</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Fiziologik belgilar (yosh, jins, joylashuv) asosida tashxis qo‘yish</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> AI natijalarining tahlili: aniqlik va xatolik darajasi</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Segmentatsiya: zararlangan hududlarni aniqlab ajratish</li>
-                    <li><i class="fas fa-check-circle text-success mr-2"></i> Model tahliliga asoslangan kengaytirilgan diagnostika funksiyalari</li>
-                </ul>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Rasm yuklash orqali avtomatik tashxis qo‘yish") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Tashxis natijalarini saqlash va tarixini ko‘rish") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Tashxisga asoslangan tavsiyalar") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Foydalanuvchi uchun oddiy va tushunarli interfeys") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Melanoma tashxisli tasvirlardan API orqali foydalanish") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Fiziologik belgilar (yosh, jins, joylashuv) asosida tashxis qo‘yish") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("AI natijalarining tahlili: aniqlik va xatolik darajasi") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Segmentatsiya: zararlangan hududlarni aniqlab ajratish") }}</li>
+                    <li><i class="fas fa-check-circle text-success mr-2"></i> {{ __("Model tahliliga asoslangan kengaytirilgan diagnostika funksiyalari") }}</li>
+                     </ul>
 
 
 
                 <hr>
-
-                <h5><strong>Nima uchun bu loyiha zarur?</strong></h5>
+                <h5><strong>{{ __("Nima uchun bu loyiha zarur?") }}</strong></h5>
                 <p>
-                    Hozirgi kunda dermatologik kasalliklar ko‘payib bormoqda va ularni erta aniqlash bemorning hayot sifati va hayotini saqlab qolishda muhim rol o‘ynaydi.
-                    Bu tizim yordamida shifokorlar:
+                    {{ __("Hozirgi kunda dermatologik kasalliklar ko‘payib bormoqda va ularni erta aniqlash bemorning hayot sifati va hayotini saqlab qolishda muhim rol o‘ynaydi.") }}
+                    {{ __("Bu tizim yordamida shifokorlar:") }}
                 </p>
                 <ul class="list-unstyled">
-                    <li><i class="fas fa-angle-right text-primary mr-1"></i> Tezkor tashxis qo‘yish</li>
-                    <li><i class="fas fa-angle-right text-primary mr-1"></i> Ob’ektiv natijaga asoslanish</li>
-                    <li><i class="fas fa-angle-right text-primary mr-1"></i> Ilmiy tahlillarga tayanish imkoniyatiga ega bo‘ladi</li>
+                    <li><i class="fas fa-angle-right text-primary mr-1"></i> {{ __("Tezkor tashxis qo‘yish") }}</li>
+                    <li><i class="fas fa-angle-right text-primary mr-1"></i> {{ __("Ob’ektiv natijaga asoslanish") }}</li>
+                    <li><i class="fas fa-angle-right text-primary mr-1"></i> {{ __("Ilmiy tahlillarga tayanish imkoniyatiga ega bo‘ladi") }}</li>
                 </ul>
+
 
                 <hr>
 
                 <p class="mb-0 text-muted">
                     <i class="fas fa-info-circle mr-1"></i>
-                    Loyihaning sun’iy intellekt modeli <strong>Melanoma</strong> va boshqa 6 turdagi teri o‘zgarishlarini aniqlashga qodir.
+                    {!! __("Loyihaning sun’iy intellekt modeli <strong>Melanoma</strong> va boshqa 6 turdagi teri o‘zgarishlarini aniqlashga qodir.") !!}
                 </p>
+
             </div>
         </div>
 

@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Post yaratish</li>
       </ol>
     </div>
@@ -15,7 +15,7 @@
 @endsection
 @section('content')
 <div class="col-md-12">
-        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ localized_route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card card-primary card-outline">
                 <div class="card-header">

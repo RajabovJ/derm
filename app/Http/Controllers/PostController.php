@@ -64,9 +64,11 @@ class PostController extends Controller
                 $doctor->notify(new NewPostNotification($post));
             }
         }
-        return redirect()->route('posts.index')->with('success', 'Post muvaffaqiyatli yaratildi.');
+        return redirect()->to(localized_route('posts.index'))
+        ->with('success', __('Post muvaffaqiyatli yaratildi.'));
+
     }
-    public function show(Post $post, $notificationId = null)
+    public function show($locale, Post $post, $notificationId = null)
     {
         $user = auth()->user();
         $this->authorize('view', $post);

@@ -7,7 +7,7 @@
     </div><!-- /.col -->
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">Tashxis tafsilotlari</li>
       </ol>
     </div><!-- /.col -->
@@ -147,7 +147,7 @@
             </div>
         </div>
     </div>
-    <a href="{{ route('diagnosis.downloadPdf', $diagnosisResult->id) }}" class="btn btn-app bg-danger">
+    <a href="{{ localized_route('diagnosis.downloadPdf', $diagnosisResult->id) }}" class="btn btn-app bg-danger">
         <span class="badge bg-teal">PDF</span>
         <i class="fas fa-file-download"></i> Yuklab olish
     </a>

@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
 
   <link rel="stylesheet" href="{{asset('adminlte/plugins/flag-icon-css/css/flag-icon.min.css')}}">
-
+@yield('styles')
   <style>
     .responsive-font {
     font-size: 12px;
@@ -248,57 +248,47 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-
-
-            <li class="nav-item">
-                <a href="{{localized_route('dashboard')}}" class="nav-link">
+               <li class="nav-item">
+                <a href="{{ localized_route('dashboard') }}" class="nav-link">
                     <i class="nav-icon fas fa-home"></i>
-                    <p>{{__("Bosh sahifa")}}</p>
+                    <p>{{ __("Bosh sahifa") }}</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ localized_route('patients.create') }}" class="nav-link">
                     <i class="nav-icon fas fa-notes-medical"></i>
-                    <p>Tashxis qo‘yish</p>
+                    <p>{{ __("Tashxis qo‘yish") }}</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{localized_route('diagnosis-results.index')}}" class="nav-link">
+                <a href="{{ localized_route('diagnosis-results.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-history"></i>
-                    <p>Jami urinishlarim</p>
+                    <p>{{ __("Jami urinishlarim") }}</p>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a href="{{localized_route('patients.index')}}" class="nav-link">
+                <a href="{{ localized_route('patients.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-user-injured"></i>
-                    <p>Mening bemorlarim</p>
+                    <p>{{ __("Mening bemorlarim") }}</p>
                 </a>
             </li>
-
-
-
             <li class="nav-item">
-                <a href="{{localized_route('posts.index')}}" class="nav-link">
+                <a href="{{ localized_route('posts.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-bullhorn"></i>
-                    <p>E'lonlar</p>
+                    <p>{{ __("E'lonlar") }}</p>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a href="{{localized_route('mel.images')}}" class="nav-link">
+                <a href="{{ localized_route('mel.images') }}" class="nav-link">
                     <i class="nav-icon fas fa-diagnoses"></i>
-                    <p>API (Melanoma tasvirlar)</p>
+                    <p>{{ __("API (Melanoma tasvirlar)") }}</p>
                 </a>
             </li>
-
-
-
             <li class="nav-item">
                 <a href="{{ localized_route('logout') }}" class="nav-link"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
-                    <p>Chiqish</p>
+                    <p>{{ __("Chiqish") }}</p>
                 </a>
                 <form id="logout-form" action="{{ localized_route('logout') }}" method="POST" class="d-none">
                     @csrf
@@ -343,20 +333,20 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
             <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
                   <h3>{{$count}}</h3>
-                  <p>Mening urinishlarim</p>
+                  <p>{{ __("Mening urinishlarim") }}</p>
                 </div>
                 <div class="icon">
                   <i class="nav-icon fas fa-history"></i>
                 </div>
-                <a href="{{localized_route('diagnosis-results.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ localized_route('diagnosis-results.index') }}" class="small-box-footer">{{ __("Ko'proq...") }} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -365,12 +355,12 @@
               <div class="small-box bg-success">
                 <div class="inner">
                   <h3>{{$uniquePatientCount}}<sup style="font-size: 20px"></sup></h3>
-                  <p>Mening bemorlarim</p>
+                  <p>{{ __("Mening bemorlarim") }}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-user-injured"></i>
                 </div>
-                <a href="{{localized_route('patients.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ localized_route('patients.index') }}" class="small-box-footer">{{ __("Ko'proq...") }} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -379,12 +369,12 @@
               <div class="small-box bg-warning">
                 <div class="inner">
                   <h3>{{$countmel}}</h3>
-                  <p>Melanoma holatlari rasmlar</p>
+                  <p>{{ __("Melanoma holatlari rasmlar") }}</p>
                 </div>
                 <div class="icon">
                   <i class="nav-icon fas fa-diagnoses"></i>
                 </div>
-                <a href="{{localized_route('mel.images')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ localized_route('mel.images') }}" class="small-box-footer">{{ __("Ko'proq...") }} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -393,22 +383,23 @@
               <div class="small-box bg-danger">
                 <div class="inner">
                   <h3>{{$postCount}}</h3>
-                  <p>E'lonlar</p>
+                  <p>{{ __("E'lonlar") }}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-bullhorn"></i>
                 </div>
-                <a href="{{localized_route('posts.index')}}" class="small-box-footer">Ko'proq... <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ localized_route('posts.index') }}" class="small-box-footer">{{ __("Ko'proq...") }} <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
 
-        <!-- /.row -->
-        <div class="responsive-font row">
+          <!-- /.row -->
+          <div class="responsive-font row">
             @yield('content')
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

@@ -7,8 +7,8 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
-        <li class="breadcrumb-item "><a href="{{route('posts.index')}}">E'lonlar</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('posts.index')}}">E'lonlar</a></li>
         <li class="breadcrumb-item active">E'lon</li>
       </ol>
     </div>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="card-footer bg-white text-right">
-                    <a href="{{ route('posts.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ localized_route('posts.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left"></i> Orqaga
                     </a>
                 </div>

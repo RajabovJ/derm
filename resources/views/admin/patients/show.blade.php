@@ -7,8 +7,8 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
-        <li class="breadcrumb-item "><a href="{{route('patients.index')}}">Mening bemorlarim</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('patients.index')}}">Mening bemorlarim</a></li>
         <li class="breadcrumb-item active">Bemor  haqida</li>
       </ol>
     </div>

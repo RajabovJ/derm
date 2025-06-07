@@ -15,6 +15,9 @@ class DiagnosisResult extends Model
         'assesment_id',
         'result',
         'message',
+        'segmentation_mask',
+        'probabilities',
+        'extracted_lesion',
     ];
     public function assesment(): BelongsTo
     {

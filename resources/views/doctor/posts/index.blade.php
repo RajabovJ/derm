@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
       <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item "><a href="{{route('dashboard')}}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item "><a href="{{localized_route('dashboard')}}">Bosh sahifa</a></li>
         <li class="breadcrumb-item active">E'lonlar</li>
       </ol>
     </div>
@@ -23,7 +23,7 @@
             <ul class="products-list product-list-in-card m-0">
                 @forelse ($posts as $post)
                 <li class="item d-flex align-items-start border-bottom px-2 py-3 position-relative">
-                    <a href="{{ route('posts.show', $post->id) }}" class="stretched-link"></a>
+                    <a href="{{ localized_route('posts.show', $post->id) }}" class="stretched-link"></a>
 
                     <div class="mr-3" style="width: 50px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0;">
                         <img src="{{ $post->image_url ? asset('storage/' . $post->image_url) : asset('default-post-image.jpg') }}"
